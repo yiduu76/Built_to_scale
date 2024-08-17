@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://1wi27141mlx1"]
+[gd_scene load_steps=4 format=3 uid="uid://1wi27141mlx1"]
 
-[ext_resource type="Script" path="res://tscn/boxes.gd" id="2_paj5d"]
+[ext_resource type="Script" path="res://script/ui.gd" id="1_ald8d"]
+[ext_resource type="Script" path="res://script/boxes.gd" id="2_paj5d"]
+[ext_resource type="StyleBox" uid="uid://pf262jo1m3my" path="res://asset/ui_style/body.tres" id="3_8vtkb"]
 
 [node name="Dev" type="Node2D"]
 
@@ -19,6 +21,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_ald8d")
 metadata/_edit_lock_ = true
 
 [node name="Boxes" type="GridContainer" parent="UICanvas/UI"]
@@ -38,3 +41,19 @@ theme_override_constants/h_separation = -1
 theme_override_constants/v_separation = -1
 columns = 15
 script = ExtResource("2_paj5d")
+
+[node name="CharsLabel" type="Label" parent="UICanvas/UI"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -9.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 4
+theme_override_styles/normal = ExtResource("3_8vtkb")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="chars_change" from="UICanvas/UI/Boxes" to="UICanvas/UI" method="_on_boxes_chars_change"]
