@@ -1,4 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://pwkoi6tjhkr3"]
+[gd_scene load_steps=9 format=3 uid="uid://pwkoi6tjhkr3"]
+
+[ext_resource type="AudioStream" uid="uid://6u1ypt54u3on" path="res://asset/sound_effect/Hit_se.MP3" id="1_qluhk"]
 
 [sub_resource type="Gradient" id="Gradient_0f1ri"]
 colors = PackedColorArray(1, 0, 0, 1, 0.5, 0.5, 0.5, 0.443137)
@@ -47,3 +49,8 @@ process_material = SubResource("ParticleProcessMaterial_g7grt")
 lifetime = 0.4
 one_shot = true
 explosiveness = 1.0
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("1_qluhk")
+pitch_scale = 1.4
+autoplay = true
