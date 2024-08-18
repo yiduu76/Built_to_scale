@@ -1,0 +1,49 @@
+[gd_scene load_steps=8 format=3 uid="uid://pwkoi6tjhkr3"]
+
+[sub_resource type="Gradient" id="Gradient_0f1ri"]
+colors = PackedColorArray(1, 0, 0, 1, 0.5, 0.5, 0.5, 0.443137)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_0e0wd"]
+gradient = SubResource("Gradient_0f1ri")
+
+[sub_resource type="Curve" id="Curve_ur726"]
+max_value = 100.0
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 79.1209), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_06ci0"]
+curve = SubResource("Curve_ur726")
+
+[sub_resource type="Curve" id="Curve_yhn7o"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_r7tf0"]
+curve = SubResource("Curve_yhn7o")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_g7grt"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 7.0
+angle_min = -720.0
+angle_max = 720.0
+spread = 180.0
+initial_velocity_min = 280.0
+initial_velocity_max = 350.0
+angular_velocity_min = -720.0
+angular_velocity_max = -681.29
+gravity = Vector3(0, 0, 0)
+damping_max = 44.086
+damping_curve = SubResource("CurveTexture_06ci0")
+scale_min = 2.8
+scale_max = 7.0
+scale_curve = SubResource("CurveTexture_r7tf0")
+color_ramp = SubResource("GradientTexture1D_0e0wd")
+
+[node name="hit_vfx" type="GPUParticles2D"]
+emitting = false
+amount = 14
+process_material = SubResource("ParticleProcessMaterial_g7grt")
+lifetime = 0.4
+one_shot = true
+explosiveness = 1.0
