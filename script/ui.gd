@@ -6,6 +6,9 @@ static  var singleton
 @onready var hp_bar: ProgressBar = $Left/ProgressBar
 @onready var ey_hp_bar: ProgressBar = $Right/ProgressBar
 
+@onready var atk_num: Label = $Left/atk_num
+@onready var ey_atk_num: Label = $Right/atk_num
+
 
 func _ready() -> void:
 	singleton = self
@@ -19,3 +22,5 @@ func _on_boxes_chars_change(p_str: Variant) -> void:
 func _process(delta: float) -> void:
 	hp_bar.value = Glo.hp
 	ey_hp_bar.value = Glo.ey_hp
+	atk_num.text = "%s : %s" % ["🏹",Glo.atk]
+	ey_atk_num.text = "%s : %s" % ["💣",Glo.ey_atk]

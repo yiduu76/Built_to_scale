@@ -10,7 +10,7 @@ extends Node2D
 
 const EMOJI_VFX = preload("res://tscn/emoji_vfx.tscn")
 const ATK_NUMS = preload("res://tscn/atk_nums.tscn")
-const center_pos = Vector2(320/2,180/2)
+const center_pos = Vector2(320.0/2.0,180.0/2.0)
 
 func _ready() -> void:
 	Glo.settle_emoji.connect(_on_settle_emoji)
@@ -18,33 +18,40 @@ func _ready() -> void:
 	ey_anim.animation_finished.connect(reset_anim)
 	player_area_2d.area_entered.connect(on_player_hited)
 	ey_area_2d.area_entered.connect(on_ey_hited)
-	
+
+func _process(_delta: float) -> void:
+	do_tween()
+
 func _on_settle_emoji(emoji:String,num:float):
 	match emoji:
 		"😋":
-			var p_ = clampf((num + 100.0)/1000.0,0.5,3.0)
+			# var p_ = clampf((num + 100.0)/1000.0,0.5,3.0)
 			create_emoji_vfx(center_pos,num,"😋",player_body.global_position)
 			await get_tree().create_timer(1.1).timeout
-			do_tween(player_body,Vector2(p_, p_))
+			Glo.size = clampf((100.0 + num),1,400)
+			# do_tween(player_body,Vector2(p_, p_))
 		"🏹":
-			var p_ = clampf((num + 100.0)/1000.0,0.5,2.0)
+			# var p_ = clampf((num + 100.0)/1000.0,0.5,2.0)
 			create_emoji_vfx(center_pos,num,"🏹",player_sword.global_position)
 			await get_tree().create_timer(1.1).timeout
-			do_tween(player_sword,Vector2(p_, p_))
+			# do_tween(player_sword,Vector2(p_, p_))
 			player_anim.play("attk")
-			create_atk_num(player_sword.get_parent(),num)
+			Glo.atk = clampf((0 + num),1,100)
+			create_atk_num(player_sword.get_parent(),Glo.atk)
 		"🐣":
-			var p_ = clampf((num + 100.0)/1000.0,0.5,3.0)
+			# var p_ = clampf((num + 100.0)/1000.0,0.5,3.0)
 			create_emoji_vfx(center_pos,num,"🐣",ey_body.global_position)
 			await get_tree().create_timer(1.1).timeout
-			do_tween(ey_body,Vector2(p_, p_))
+			Glo.ey_size = clampf((100.0 + num),1,400)
+			# do_tween(ey_body,Vector2(p_, p_))
 		"💣":
-			var p_ = clampf((num + 100.0)/1000.0,0.5,2.0)
+			# var p_ = clampf((num + 100.0)/1000.0,0.5,2.0)
 			create_emoji_vfx(center_pos,num,"💣",ey_sword.global_position)
 			await get_tree().create_timer(1.1).timeout
-			do_tween(ey_sword,Vector2(p_, p_))
+			# do_tween(ey_sword,Vector2(p_, p_))
 			ey_anim.play("attk")
-			create_atk_num(ey_sword.get_parent(),num)
+			Glo.ey_atk = clampf((10 + num),1,100)
+			create_atk_num(ey_sword.get_parent(),Glo.ey_atk)
 
 func create_atk_num(node,num):
 	var p_num = clampi(abs(int(num)),1,100)
@@ -72,10 +79,16 @@ func create_emoji_vfx(p_pos,num,p_emoji:String,p_end_pos:Vector2):
 		else :
 			p_vfx.modulate = Color.GREEN
 
-func do_tween(target,target_scale):
-	var p_tween = create_tween()
-	p_tween.tween_property(target,"scale",target_scale,0.7)
-	p_tween.play()
+# func do_tween(target,target_scale):
+func do_tween():
+	player_body.scale = lerp(player_body.scale,Glo.size/100.0,0.05)
+	ey_body.scale = lerp(ey_body.scale,Glo.ey_size/100.0,0.05)
+	player_sword.scale = lerp(player_sword.scale,Glo.atk/100.0,0.05)
+	ey_sword.scale = lerp(ey_sword.scale,Glo.ey_atk/100.0,0.05)
+
+	# var p_tween = create_tween()
+	# p_tween.tween_property(target,"scale",target_scale,0.7)
+	# p_tween.play()
 
 func reset_anim(p_name:String):
 	if p_name == "RESET":
@@ -96,3 +109,9 @@ func _on_timer_timeout() -> void:
 	ey_body.scale = lerp(ey_body.scale,Vector2(1,1),0.05)
 	player_sword.scale = lerp(player_sword.scale,Vector2(1,1),0.05)
 	ey_sword.scale = lerp(ey_sword.scale,Vector2(1,1),0.05)
+	Glo.atk = lerp(Glo.atk,0,0.05)
+	Glo.ey_atk = lerp(Glo.ey_atk,0,0.05)
+	Glo.size = lerp(Glo.size,100,0.05)
+	Glo.ey_size = lerp(Glo.ey_size,100,0.05)
+
+

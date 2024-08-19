@@ -14,18 +14,27 @@ var dir:Vector2:
 		dir = v
 		do_move(v)
 		timer.start(0)
+# @onready var eat_able
 var timer:Timer
 const OUTLINE = preload("res://asset/ui_style/outline.tres")
 const BODY = preload("res://asset/ui_style/body.tres")
-const rand_pond = ["","","","","","","","","","","","","","","","","","",\
-				"0","1","2","*","/","+","-","3","4","5","","","😋","💣","🏹","🐣"]
+@onready var  rand_pond = []
 signal chars_change(p_str)
 
 func _ready() -> void:
+	init_rand_pond()
 	init_btns()
 	init_timer()
 	Glo.dir_signal.connect(on_dir_signal_emit)
 	path_array.append(now_pos)
+
+
+func init_rand_pond():
+	rand_pond += Glo.special_char
+	rand_pond += Glo.caculate_char
+	rand_pond += Glo.number_char
+	for i in 20:
+		rand_pond.append("")
 
 func on_dir_signal_emit(p_dir:Vector2):
 	dir = p_dir
@@ -81,13 +90,21 @@ func do_move(p_dir:Vector2):
 		return
 	var get_char = btns_2d[now_pos.y][now_pos.x].text
 	
+	check_pos_inside_body(now_pos)
+
 #	这里进行特殊结算的判定
 	if get_char != "":
 		if get_char in Glo.special_char:
 			settle_scale_num(get_char)
 		else :
-			chars += get_char
-	
+			var last_char = chars.right(1)
+			if last_char in Glo.caculate_char and get_char in Glo.caculate_char:
+				pass
+			elif last_char in Glo.number_char and get_char in Glo.number_char:
+				pass
+			else :
+				chars += get_char
+
 	path_array.append(now_pos)
 	var p_arrray:Array = Glo.reverse_array(path_array)
 	var p_char = Glo.reverse_string(chars)
@@ -106,3 +123,9 @@ func do_move(p_dir:Vector2):
 		else :
 			btns_2d[p_x][p_y].text = ""
 			(btns_2d[p_x][p_y] as Label).add_theme_stylebox_override("normal",OUTLINE)
+
+func check_pos_inside_body(pos:Vector2):
+	for i in btns:
+		if i.get_theme_stylebox("normal") == BODY:
+			Glo.settle_emoji.emit("💣",100.0)
+

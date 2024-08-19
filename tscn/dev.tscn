@@ -192,6 +192,13 @@ text = "❤️"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="atk_num" type="Label" parent="UICanvas/UI/Left"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 29.0
+offset_right = 41.0
+offset_bottom = 52.0
+
 [node name="Right" type="Control" parent="UICanvas/UI"]
 layout_mode = 1
 anchors_preset = 1
@@ -226,6 +233,12 @@ size_flags_horizontal = 0
 text = "❤️"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="atk_num" type="Label" parent="UICanvas/UI/Right"]
+offset_left = 23.0
+offset_top = 29.0
+offset_right = 63.0
+offset_bottom = 52.0
 
 [node name="Main" type="Node2D" parent="."]
 script = ExtResource("6_w1ted")
