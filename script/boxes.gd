@@ -1,4 +1,5 @@
 extends GridContainer
+@onready var eat_se: AudioStreamPlayer2D = $"../Eat_se"
 @onready var p_btns:Array[Label]
 @onready var btns:Array[Label]
 @onready var btns_2d:Array
@@ -22,6 +23,7 @@ const BODY = preload("res://asset/ui_style/body.tres")
 signal chars_change(p_str)
 
 func _ready() -> void:
+	randomize()
 	init_rand_pond()
 	init_btns()
 	init_timer()
@@ -33,8 +35,10 @@ func init_rand_pond():
 	rand_pond += Glo.special_char
 	rand_pond += Glo.caculate_char
 	rand_pond += Glo.number_char
-	for i in 20:
+	for i in 25:
 		rand_pond.append("")
+	rand_pond += Glo.custom_pond
+
 
 func on_dir_signal_emit(p_dir:Vector2):
 	dir = p_dir
@@ -51,7 +55,7 @@ func init_btns():
 		if i == 0 or i == 1:
 			pass
 		else :
-			p_button.text = [rand_pond.pick_random()].pick_random()
+			p_button.text = rand_pond.pick_random()
 		add_child(p_button)
 		btns.append(p_button)
 		p_btns.append(p_button)
@@ -72,6 +76,7 @@ func timer_timeout():
 
 func settle_scale_num(target_char:String):
 	var caculate_num = Mymath.evaluate_expression(chars)
+	caculate_num = clampf(caculate_num,-9999,9999)
 	Glo.settle_emoji.emit(target_char,caculate_num)
 	
 	var final_array:Array = Glo.reverse_array(path_array)
@@ -86,17 +91,16 @@ func settle_scale_num(target_char:String):
 func do_move(p_dir:Vector2):
 	now_pos = now_pos + p_dir
 	if now_pos.x > 14 or now_pos.y > 14 or now_pos.x < 0 or now_pos.y < 0:
-		get_tree().quit()
+		Glo.game_over()
 		return
 	var get_char = btns_2d[now_pos.y][now_pos.x].text
-	
-	check_pos_inside_body(now_pos)
-
 #	这里进行特殊结算的判定
 	if get_char != "":
 		if get_char in Glo.special_char:
 			settle_scale_num(get_char)
+			eat_se.play(0)
 		else :
+			#chars += get_char
 			var last_char = chars.right(1)
 			if last_char in Glo.caculate_char and get_char in Glo.caculate_char:
 				pass
@@ -104,6 +108,7 @@ func do_move(p_dir:Vector2):
 				pass
 			else :
 				chars += get_char
+				eat_se.play(0)
 
 	path_array.append(now_pos)
 	var p_arrray:Array = Glo.reverse_array(path_array)
@@ -113,6 +118,9 @@ func do_move(p_dir:Vector2):
 	for i in (p_char.length() + 1):
 		final_array.append(p_arrray.pop_front())
 		
+	check_pos_inside_body(final_array)
+
+
 	for i in final_array.size():
 		var p_x = final_array[i].y
 		var p_y = final_array[i].x
@@ -123,9 +131,28 @@ func do_move(p_dir:Vector2):
 		else :
 			btns_2d[p_x][p_y].text = ""
 			(btns_2d[p_x][p_y] as Label).add_theme_stylebox_override("normal",OUTLINE)
+	rand_new_emoji()
 
-func check_pos_inside_body(pos:Vector2):
+func check_pos_inside_body(p_array:Array):
+	var p_ = []
+	for i in p_array:
+		p_.append(i)
+	p_.remove_at(0)
+	for i in p_:
+		if now_pos == i:
+			Glo.settle_emoji.emit("💣",Glo.origin_ey_atk * 7)
+
+func rand_new_emoji():
+	var exist_emoji_num = 0
 	for i in btns:
-		if i.get_theme_stylebox("normal") == BODY:
-			Glo.settle_emoji.emit("💣",100.0)
+		if i.text != "":
+			exist_emoji_num += 1
+	#printerr(exist_emoji_num)
+	if exist_emoji_num <= btns.size() * 0.3:
+		_rand()
 
+func _rand():
+	for i in btns:
+		if i.text == "" and randf_range(0,1.0) <= 0.2:
+			i.text = rand_pond.pick_random()
+			pass

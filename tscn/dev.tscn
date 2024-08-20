@@ -1,15 +1,48 @@
-[gd_scene load_steps=15 format=3 uid="uid://1wi27141mlx1"]
+[gd_scene load_steps=27 format=3 uid="uid://1wi27141mlx1"]
 
+[ext_resource type="AudioStream" uid="uid://dom5nexmo12qi" path="res://asset/music/1.mp3" id="1_8rv8c"]
 [ext_resource type="Script" path="res://script/ui.gd" id="1_ald8d"]
-[ext_resource type="AudioStream" uid="uid://csac1uflqmh8h" path="res://asset/music/SleazyFurball.ogg" id="1_o7aef"]
 [ext_resource type="Script" path="res://script/boxes.gd" id="2_paj5d"]
-[ext_resource type="StyleBox" uid="uid://pf262jo1m3my" path="res://asset/ui_style/body.tres" id="3_8vtkb"]
-[ext_resource type="StyleBox" uid="uid://cb04wrsh8sdl5" path="res://asset/ui_style/button_nor.tres" id="4_7lrtg"]
-[ext_resource type="StyleBox" uid="uid://bmp3gkqr73e5o" path="res://asset/ui_style/button_hover.tres" id="5_4nsgi"]
+[ext_resource type="AudioStream" uid="uid://blmjcw6slrrkr" path="res://asset/sound_effect/Retro Event UI 01.wav" id="5_54llt"]
 [ext_resource type="Script" path="res://script/main.gd" id="6_w1ted"]
+[ext_resource type="PackedScene" uid="uid://bxs8fg468bpm" path="res://tscn/MyBar.tscn" id="7_0v8i5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_em4h8"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Shader" id="Shader_j87y1"]
+code = "shader_type canvas_item;
+uniform float white_scale:hint_range(0.0,1.0);
+void fragment(){
+vec4 color =texture(TEXTURE,UV);
+COLOR = mix (color,vec4(1,1,1,1),white_scale);
+COLOR.a = color.a;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0vcxr"]
+shader = SubResource("Shader_j87y1")
+shader_parameter/white_scale = 0.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ddgj7"]
 radius = 26.0768
+
+[sub_resource type="Shader" id="Shader_pnk2x"]
+code = "shader_type canvas_item;
+uniform float white_scale:hint_range(0.0,1.0);
+void fragment(){
+vec4 color =texture(TEXTURE,UV);
+COLOR = mix (color,vec4(1,1,1,1),white_scale);
+COLOR.a = color.a;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8ovgp"]
+shader = SubResource("Shader_pnk2x")
+shader_parameter/white_scale = null
 
 [sub_resource type="Animation" id="Animation_tllws"]
 length = 0.1
@@ -24,6 +57,42 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [0.785398, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Body:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Weapon:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Body/Emoji:material:shader_parameter/white_scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
 }
 
 [sub_resource type="Animation" id="Animation_vneq2"]
@@ -43,11 +112,84 @@ tracks/0/keys = {
 "values": [0.0, 0.785398, 0.785398]
 }
 
+[sub_resource type="Animation" id="Animation_4woyj"]
+resource_name = "hitted"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body/Emoji:material:shader_parameter/white_scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="Animation" id="Animation_lxl0q"]
+resource_name = "idel"
+length = 2.0
+step = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -3), Vector2(0, 0), Vector2(0, 3), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Weapon:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 3), Vector2(0, 0), Vector2(0, -3), Vector2(0, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_cp6gm"]
 _data = {
 "RESET": SubResource("Animation_tllws"),
-"attk": SubResource("Animation_vneq2")
+"attk": SubResource("Animation_vneq2"),
+"hitted": SubResource("Animation_4woyj"),
+"idel": SubResource("Animation_lxl0q")
 }
+
+[sub_resource type="Shader" id="Shader_xhg08"]
+code = "shader_type canvas_item;
+uniform float white_scale:hint_range(0.0,1.0);
+void fragment(){
+vec4 color =texture(TEXTURE,UV);
+COLOR = mix (color,vec4(1,1,1,1),white_scale);
+COLOR.a = color.a;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7etni"]
+shader = SubResource("Shader_xhg08")
+shader_parameter/white_scale = null
+
+[sub_resource type="Shader" id="Shader_qsgjg"]
+code = "shader_type canvas_item;
+uniform float white_scale:hint_range(0.0,1.0);
+void fragment(){
+vec4 color =texture(TEXTURE,UV);
+COLOR = mix (color,vec4(1,1,1,1),white_scale);
+COLOR.a = color.a;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yh76b"]
+shader = SubResource("Shader_qsgjg")
+shader_parameter/white_scale = 0.0
 
 [sub_resource type="Animation" id="Animation_16qk3"]
 length = 0.001
@@ -74,6 +216,30 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Body:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Body/Emoji:material:shader_parameter/white_scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
 }
 
 [sub_resource type="Animation" id="Animation_2fegg"]
@@ -104,10 +270,57 @@ tracks/1/keys = {
 "values": [Vector2(0, 0), Vector2(0, -35)]
 }
 
+[sub_resource type="Animation" id="Animation_x8w4p"]
+resource_name = "hitted"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body/Emoji:material:shader_parameter/white_scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="Animation" id="Animation_p06bv"]
+resource_name = "idel"
+length = 2.0
+step = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 3), Vector2(0, 0), Vector2(0, -3), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Weapon:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -3), Vector2(0, 0), Vector2(0, 3), Vector2(0, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1clww"]
 _data = {
 "RESET": SubResource("Animation_16qk3"),
-"attk": SubResource("Animation_2fegg")
+"attk": SubResource("Animation_2fegg"),
+"hitted": SubResource("Animation_x8w4p"),
+"idel": SubResource("Animation_p06bv")
 }
 
 [node name="Dev" type="Node2D"]
@@ -115,11 +328,11 @@ _data = {
 [node name="BackGround" type="Node2D" parent="."]
 
 [node name="Polygon2D" type="Polygon2D" parent="BackGround"]
-color = Color(0.894922, 0.894922, 0.894922, 1)
+color = Color(0.84, 0.79492, 0.4536, 1)
 polygon = PackedVector2Array(-100, -100, 440, -100, 440, 240, -100, 240)
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="BackGround"]
-stream = ExtResource("1_o7aef")
+stream = ExtResource("1_8rv8c")
 autoplay = true
 
 [node name="UICanvas" type="CanvasLayer" parent="."]
@@ -149,16 +362,21 @@ columns = 15
 script = ExtResource("2_paj5d")
 
 [node name="CharsLabel" type="Label" parent="UICanvas/UI"]
+custom_minimum_size = Vector2(24, 0)
 layout_mode = 1
-anchors_preset = 12
+anchors_preset = 7
+anchor_left = 0.5
 anchor_top = 1.0
-anchor_right = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
+offset_left = -1.5
 offset_top = -9.0
+offset_right = 1.5
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_font_sizes/font_size = 4
-theme_override_styles/normal = ExtResource("3_8vtkb")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 5
+theme_override_styles/normal = SubResource("StyleBoxFlat_em4h8")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -167,20 +385,6 @@ layout_mode = 1
 anchors_preset = 0
 offset_right = 64.0
 offset_bottom = 40.0
-
-[node name="ProgressBar" type="ProgressBar" parent="UICanvas/UI/Left"]
-custom_minimum_size = Vector2(48, 0)
-layout_mode = 2
-offset_left = 12.0
-offset_top = 16.0
-offset_right = 60.0
-offset_bottom = 24.0
-size_flags_horizontal = 0
-size_flags_vertical = 4
-theme_override_font_sizes/font_size = 4
-theme_override_styles/background = ExtResource("4_7lrtg")
-theme_override_styles/fill = ExtResource("5_4nsgi")
-value = 50.0
 
 [node name="Label" type="Label" parent="UICanvas/UI/Left"]
 layout_mode = 2
@@ -195,9 +399,34 @@ vertical_alignment = 1
 [node name="atk_num" type="Label" parent="UICanvas/UI/Left"]
 layout_mode = 0
 offset_left = 1.0
-offset_top = 29.0
+offset_top = 30.0
 offset_right = 41.0
-offset_bottom = 52.0
+offset_bottom = 39.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 6
+vertical_alignment = 1
+
+[node name="size_num" type="Label" parent="UICanvas/UI/Left"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 40.0
+offset_right = 42.0
+offset_bottom = 49.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 6
+vertical_alignment = 1
+
+[node name="MyBar" parent="UICanvas/UI/Left" instance=ExtResource("7_0v8i5")]
+offset_left = 23.0
+offset_top = 17.0
+offset_right = 23.0
+offset_bottom = 29.0
+BarName = "hp"
+bar_grove_dir = "RIGHT"
 
 [node name="Right" type="Control" parent="UICanvas/UI"]
 layout_mode = 1
@@ -207,21 +436,6 @@ anchor_right = 1.0
 offset_left = -64.0
 offset_bottom = 40.0
 grow_horizontal = 0
-
-[node name="ProgressBar" type="ProgressBar" parent="UICanvas/UI/Right"]
-custom_minimum_size = Vector2(48, 0)
-layout_mode = 2
-offset_left = 6.0
-offset_top = 18.0
-offset_right = 54.0
-offset_bottom = 26.0
-size_flags_horizontal = 0
-size_flags_vertical = 4
-theme_override_font_sizes/font_size = 4
-theme_override_styles/background = ExtResource("4_7lrtg")
-theme_override_styles/fill = ExtResource("5_4nsgi")
-value = 50.0
-fill_mode = 1
 
 [node name="Label" type="Label" parent="UICanvas/UI/Right"]
 layout_mode = 2
@@ -235,10 +449,43 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="atk_num" type="Label" parent="UICanvas/UI/Right"]
-offset_left = 23.0
-offset_top = 29.0
+layout_mode = 0
+offset_left = 7.0
+offset_top = 30.0
 offset_right = 63.0
-offset_bottom = 52.0
+offset_bottom = 39.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 6
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="size_num" type="Label" parent="UICanvas/UI/Right"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 40.0
+offset_right = 63.0
+offset_bottom = 49.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 6
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="MyBar" parent="UICanvas/UI/Right" instance=ExtResource("7_0v8i5")]
+offset_left = 45.0
+offset_top = 21.0
+offset_right = 45.0
+offset_bottom = 33.0
+BarName = "hp"
+bar_grove_dir = "LEFT"
+
+[node name="Eat_se" type="AudioStreamPlayer2D" parent="UICanvas/UI"]
+stream = ExtResource("5_54llt")
+volume_db = 10.0
+pitch_scale = 1.8
 
 [node name="Main" type="Node2D" parent="."]
 script = ExtResource("6_w1ted")
@@ -249,6 +496,7 @@ position = Vector2(30, 90)
 [node name="Body" type="Node2D" parent="Main/Player"]
 
 [node name="Emoji" type="Label" parent="Main/Player/Body"]
+material = SubResource("ShaderMaterial_0vcxr")
 custom_minimum_size = Vector2(70, 70)
 offset_left = -35.0
 offset_top = -35.0
@@ -271,6 +519,7 @@ shape = SubResource("CircleShape2D_ddgj7")
 rotation = 0.785398
 
 [node name="Emoji" type="Label" parent="Main/Player/Weapon"]
+material = SubResource("ShaderMaterial_8ovgp")
 custom_minimum_size = Vector2(70, 70)
 offset_left = -35.0
 offset_top = -35.0
@@ -286,6 +535,7 @@ vertical_alignment = 1
 libraries = {
 "": SubResource("AnimationLibrary_cp6gm")
 }
+autoplay = "idel"
 
 [node name="Enemy" type="Node2D" parent="Main" groups=["ey"]]
 position = Vector2(290, 90)
@@ -293,6 +543,7 @@ position = Vector2(290, 90)
 [node name="Weapon" type="Node2D" parent="Main/Enemy" groups=["ey"]]
 
 [node name="Emoji" type="Label" parent="Main/Enemy/Weapon"]
+material = SubResource("ShaderMaterial_7etni")
 custom_minimum_size = Vector2(70, 70)
 offset_left = -35.0
 offset_top = -35.0
@@ -307,6 +558,7 @@ vertical_alignment = 1
 [node name="Body" type="Node2D" parent="Main/Enemy" groups=["ey"]]
 
 [node name="Emoji" type="Label" parent="Main/Enemy/Body"]
+material = SubResource("ShaderMaterial_yh76b")
 custom_minimum_size = Vector2(70, 70)
 anchors_preset = 6
 anchor_left = 1.0
@@ -336,9 +588,9 @@ shape = SubResource("CircleShape2D_ddgj7")
 libraries = {
 "": SubResource("AnimationLibrary_1clww")
 }
+autoplay = "idel"
 
 [node name="Timer" type="Timer" parent="Main"]
 autostart = true
 
 [connection signal="chars_change" from="UICanvas/UI/Boxes" to="UICanvas/UI" method="_on_boxes_chars_change"]
-[connection signal="timeout" from="Main/Timer" to="Main" method="_on_timer_timeout"]

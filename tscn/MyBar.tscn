@@ -1,0 +1,64 @@
+[gd_scene load_steps=3 format=3 uid="uid://bxs8fg468bpm"]
+
+[ext_resource type="Script" path="res://script/MyBarClass.gd" id="1_ka3rl"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_eb7i2"]
+
+[node name="MyBar" type="Control" node_paths=PackedStringArray("bars_and_lines")]
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
+script = ExtResource("1_ka3rl")
+colors = Array[Color]([Color(0, 0, 0, 1), Color(0, 0, 0, 1), Color(0, 0, 0, 1), Color(0, 0, 0, 1)])
+bars_and_lines = [NodePath("Bars/bar"), NodePath("Bars/bar/bar_outline"), NodePath("Bars/bar_underground"), NodePath("Bars/bar_underground/bar_outline_underground")]
+init_poly = Array[Vector2]([Vector2(4, -4), Vector2(4, 4), Vector2(-4, 4), Vector2(-4, -4), Vector2(4, -4)])
+empty_poly = Array[Vector2]([Vector2(-0.05, -4), Vector2(-4, -4), Vector2(-8, 0), Vector2(-4, 4), Vector2(-0.05, 4), Vector2(0.05, 4), Vector2(4, 4), Vector2(8, 0), Vector2(4, -4), Vector2(-0.05, -4)])
+
+[node name="Bars" type="Node2D" parent="."]
+position = Vector2(0, 3)
+scale = Vector2(0.63, 0.63)
+
+[node name="bar" type="Polygon2D" parent="Bars"]
+color = Color(1, 0.3, 0.3, 1)
+
+[node name="bar_outline" type="Line2D" parent="Bars/bar"]
+modulate = Color(1, 1, 1, 0.941176)
+width = 2.0
+default_color = Color(0.35, 0.175, 0.175, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="bar_underground" type="Polygon2D" parent="Bars"]
+color = Color(0.5, 0.15, 0.15, 0.196078)
+
+[node name="bar_outline_underground" type="Line2D" parent="Bars/bar_underground"]
+modulate = Color(1, 1, 1, 0.941176)
+width = 2.0
+default_color = Color(0.35, 0.175, 0.175, 0.196078)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="tip_str" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -14.0
+offset_top = -6.0
+offset_right = 14.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 4
+theme_override_styles/normal = SubResource("StyleBoxTexture_eb7i2")
+text = "HP"
+horizontal_alignment = 1
+vertical_alignment = 1

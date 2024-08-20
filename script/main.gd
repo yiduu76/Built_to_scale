@@ -25,36 +25,30 @@ func _process(_delta: float) -> void:
 func _on_settle_emoji(emoji:String,num:float):
 	match emoji:
 		"😋":
-			# var p_ = clampf((num + 100.0)/1000.0,0.5,3.0)
 			create_emoji_vfx(center_pos,num,"😋",player_body.global_position)
 			await get_tree().create_timer(1.1).timeout
-			Glo.size = clampf((100.0 + num),1,400)
-			# do_tween(player_body,Vector2(p_, p_))
+			Glo.size = clampf((Glo.size + num),1,400)
 		"🏹":
-			# var p_ = clampf((num + 100.0)/1000.0,0.5,2.0)
-			create_emoji_vfx(center_pos,num,"🏹",player_sword.global_position)
+			Glo.atk = clampf((Glo.atk + num),1,100)
+			create_emoji_vfx(center_pos,Glo.atk,"🏹",player_sword.global_position)
 			await get_tree().create_timer(1.1).timeout
-			# do_tween(player_sword,Vector2(p_, p_))
 			player_anim.play("attk")
-			Glo.atk = clampf((0 + num),1,100)
 			create_atk_num(player_sword.get_parent(),Glo.atk)
 		"🐣":
-			# var p_ = clampf((num + 100.0)/1000.0,0.5,3.0)
 			create_emoji_vfx(center_pos,num,"🐣",ey_body.global_position)
 			await get_tree().create_timer(1.1).timeout
-			Glo.ey_size = clampf((100.0 + num),1,400)
-			# do_tween(ey_body,Vector2(p_, p_))
+			Glo.ey_size = clampf((Glo.ey_size + num),1,400)
 		"💣":
-			# var p_ = clampf((num + 100.0)/1000.0,0.5,2.0)
-			create_emoji_vfx(center_pos,num,"💣",ey_sword.global_position)
+			Glo.ey_atk = clampf((Glo.ey_atk + num),1,100)
+			create_emoji_vfx(center_pos,Glo.ey_atk,"💣",ey_sword.global_position)
 			await get_tree().create_timer(1.1).timeout
-			# do_tween(ey_sword,Vector2(p_, p_))
 			ey_anim.play("attk")
-			Glo.ey_atk = clampf((10 + num),1,100)
 			create_atk_num(ey_sword.get_parent(),Glo.ey_atk)
+	lerp_to_defult(emoji)
+	
 
 func create_atk_num(node,num):
-	var p_num = clampi(abs(int(num)),1,100)
+	var p_num = num
 	for i in p_num:
 		await get_tree().create_timer(randf_range(0.01,0.02)).timeout
 		var p_vfx = ATK_NUMS.instantiate()
@@ -64,10 +58,9 @@ func create_atk_num(node,num):
 		else :
 			p_vfx.is_ey = false
 
-
 func create_emoji_vfx(p_pos,num,p_emoji:String,p_end_pos:Vector2):
 	var bigger_zero = (num > 0)
-	var p_num = clampi(abs(int(num/50.0)),1,50)
+	var p_num = clampf(num,1,99)
 	for i in p_num:
 		var p_vfx = EMOJI_VFX.instantiate()
 		add_child(p_vfx)
@@ -79,39 +72,55 @@ func create_emoji_vfx(p_pos,num,p_emoji:String,p_end_pos:Vector2):
 		else :
 			p_vfx.modulate = Color.GREEN
 
-# func do_tween(target,target_scale):
 func do_tween():
-	player_body.scale = lerp(player_body.scale,Glo.size/100.0,0.05)
-	ey_body.scale = lerp(ey_body.scale,Glo.ey_size/100.0,0.05)
-	player_sword.scale = lerp(player_sword.scale,Glo.atk/100.0,0.05)
-	ey_sword.scale = lerp(ey_sword.scale,Glo.ey_atk/100.0,0.05)
-
-	# var p_tween = create_tween()
-	# p_tween.tween_property(target,"scale",target_scale,0.7)
-	# p_tween.play()
+	var p_1 = clampf((Glo.size/100.0),0.1,2.0)
+	player_body.scale = lerp(player_body.scale,Vector2(p_1,p_1) ,0.05)
+	var p_2 = clampf((Glo.ey_size/100.0),0.1,2.0)
+	ey_body.scale = lerp(ey_body.scale,Vector2(p_2,p_2),0.05)
+	
+	if Glo.atk > Glo.origin_atk:
+		var p_3 = clampf((1.0 + (1.0/90.0) * (Glo.atk - 10.0)),0.1,2.0)
+		player_sword.scale = lerp(player_sword.scale,Vector2(p_3,p_3),0.05)
+	elif Glo.atk < Glo.origin_atk:
+		var p_3 = clampf((1.0 + (1.0/9.0) * (Glo.atk - 10.0)),0.1,2.0)
+		player_sword.scale = lerp(player_sword.scale,Vector2(p_3,p_3),0.05)
+		
+	var p_4 = clampf((Glo.ey_atk/10.0),0.1,2.0)
+	ey_sword.scale = lerp(ey_sword.scale,Vector2(p_4,p_4),0.05)
 
 func reset_anim(p_name:String):
 	if p_name == "RESET":
-		player_anim.stop()
-		ey_anim.stop()
+		player_anim.play("idel")
+		ey_anim.play("idel")
 	else :
 		player_anim.play("RESET")
 		ey_anim.play("RESET")
 
 func on_player_hited(area:Area2D):
 	Glo.hp -= 1.0
+	player_anim.play("hitted")
 
 func on_ey_hited(area:Area2D):
 	Glo.ey_hp -= 1.0
+	ey_anim.play("hitted")
 
-func _on_timer_timeout() -> void:
-	player_body.scale = lerp(player_body.scale,Vector2(1,1),0.05)
-	ey_body.scale = lerp(ey_body.scale,Vector2(1,1),0.05)
-	player_sword.scale = lerp(player_sword.scale,Vector2(1,1),0.05)
-	ey_sword.scale = lerp(ey_sword.scale,Vector2(1,1),0.05)
-	Glo.atk = lerp(Glo.atk,0,0.05)
-	Glo.ey_atk = lerp(Glo.ey_atk,0,0.05)
-	Glo.size = lerp(Glo.size,100,0.05)
-	Glo.ey_size = lerp(Glo.ey_size,100,0.05)
+func lerp_to_defult(p_emoji:String):
+	if p_emoji != "🏹":
+		Glo.atk = lerp(Glo.atk,Glo.origin_atk,0.3)
+	if p_emoji != "💣":
+		Glo.ey_atk = lerp(Glo.ey_atk,Glo.origin_ey_atk,0.3)
+	if p_emoji != "😋":
+		Glo.size = lerp(Glo.size,100.0,0.3)
+	if p_emoji != "🐣":
+		Glo.ey_size = lerp(Glo.ey_size,100.0,0.3)
 
-
+#func _on_timer_timeout() -> void:
+	#pass
+	#player_body.scale = lerp(player_body.scale,Vector2(1.0,1.0),0.05)
+	#ey_body.scale = lerp(ey_body.scale,Vector2(1.0,1.0),0.05)
+	#player_sword.scale = lerp(player_sword.scale,Vector2(1.0,1.0),0.05)
+	#ey_sword.scale = lerp(ey_sword.scale,Vector2(1.0,1.0),0.05)
+	#Glo.atk = lerp(Glo.atk,Glo.origin_atk,0.1)
+	#Glo.ey_atk = lerp(Glo.ey_atk,Glo.origin_ey_atk,0.1)
+	#Glo.size = lerp(Glo.size,100.0,0.05)
+	#Glo.ey_size = lerp(Glo.ey_size,100.0,0.05)
