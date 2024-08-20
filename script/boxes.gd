@@ -1,4 +1,5 @@
-extends GridContainer
+extends Node2D
+@export var columns = 15
 @onready var eat_se: AudioStreamPlayer2D = $"../Eat_se"
 @onready var p_btns:Array[Label]
 @onready var btns:Array[Label]
@@ -19,6 +20,7 @@ var dir:Vector2:
 var timer:Timer
 const OUTLINE = preload("res://asset/ui_style/outline.tres")
 const BODY = preload("res://asset/ui_style/body.tres")
+const BASE_BOX = preload("res://tscn/base_box.tscn")
 @onready var  rand_pond = []
 signal chars_change(p_str)
 
@@ -45,18 +47,14 @@ func on_dir_signal_emit(p_dir:Vector2):
 
 func init_btns():
 	for i in columns * columns:
-		var p_button = Label.new()
-		p_button.custom_minimum_size = Vector2(12,12)
-		p_button.add_theme_stylebox_override("normal", OUTLINE)
-		p_button.add_theme_font_size_override("font_size",5)
-		p_button.add_theme_color_override("font_color",Color.BLACK)
-		p_button.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		p_button.vertical_alignment  = VERTICAL_ALIGNMENT_CENTER
+		var p_button = BASE_BOX.instantiate()
 		if i == 0 or i == 1:
 			pass
 		else :
-			p_button.text = rand_pond.pick_random()
+			p_button.p_text = rand_pond.pick_random()
+		p_button.position = Vector2((i%columns)*11,int(i/columns)*11)
 		add_child(p_button)
+		p_button.size = Vector2(12,12)
 		btns.append(p_button)
 		p_btns.append(p_button)
 		if (i+1) % columns == 0:
@@ -84,7 +82,7 @@ func settle_scale_num(target_char:String):
 		var p_x = final_array[i].y
 		var p_y = final_array[i].x
 		var p_btn = btns_2d[p_x][p_y]
-		btns_2d[p_x][p_y].text = ""
+		btns_2d[p_x][p_y].p_text = ""
 		(btns_2d[p_x][p_y] as Label).add_theme_stylebox_override("normal",OUTLINE)
 	chars = "1"
 
@@ -93,7 +91,7 @@ func do_move(p_dir:Vector2):
 	if now_pos.x > 14 or now_pos.y > 14 or now_pos.x < 0 or now_pos.y < 0:
 		Glo.game_over()
 		return
-	var get_char = btns_2d[now_pos.y][now_pos.x].text
+	var get_char = btns_2d[now_pos.y][now_pos.x].p_text
 #	这里进行特殊结算的判定
 	if get_char != "":
 		if get_char in Glo.special_char:
@@ -126,10 +124,10 @@ func do_move(p_dir:Vector2):
 		var p_y = final_array[i].x
 		var p_btn = btns_2d[p_x][p_y]
 		if i < p_char.length():
-			btns_2d[p_x][p_y].text = p_char[i]
+			btns_2d[p_x][p_y].p_text = p_char[i]
 			(btns_2d[p_x][p_y] as Label).add_theme_stylebox_override("normal",BODY)
 		else :
-			btns_2d[p_x][p_y].text = ""
+			btns_2d[p_x][p_y].p_text = ""
 			(btns_2d[p_x][p_y] as Label).add_theme_stylebox_override("normal",OUTLINE)
 	rand_new_emoji()
 
@@ -145,7 +143,7 @@ func check_pos_inside_body(p_array:Array):
 func rand_new_emoji():
 	var exist_emoji_num = 0
 	for i in btns:
-		if i.text != "":
+		if i.p_text != "":
 			exist_emoji_num += 1
 	#printerr(exist_emoji_num)
 	if exist_emoji_num <= btns.size() * 0.3:
@@ -153,6 +151,5 @@ func rand_new_emoji():
 
 func _rand():
 	for i in btns:
-		if i.text == "" and randf_range(0,1.0) <= 0.2:
-			i.text = rand_pond.pick_random()
-			pass
+		if i.p_text == "" and randf_range(0,1.0) <= 0.2:
+			i.p_text = rand_pond.pick_random()

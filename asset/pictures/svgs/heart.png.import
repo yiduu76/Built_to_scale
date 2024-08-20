@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d0ioyjv28dqf4"
-path="res://.godot/imported/sword.svg-d6ab533d67c43355dbb2e55b14d515f6.ctex"
+uid="uid://co05wgupglaxi"
+path="res://.godot/imported/heart.png-5ca37413f885eaaa233da37c2945cc25.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://asset/pictures/svgs/sword.svg"
-dest_files=["res://.godot/imported/sword.svg-d6ab533d67c43355dbb2e55b14d515f6.ctex"]
+source_file="res://asset/pictures/svgs/heart.png"
+dest_files=["res://.godot/imported/heart.png-5ca37413f885eaaa233da37c2945cc25.ctex"]
 
 [params]
 
@@ -32,6 +32,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

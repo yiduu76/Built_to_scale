@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cxl5he8j8umkb"
-path="res://.godot/imported/player.svg-6199624c938f4278305460718bc5ca6c.ctex"
+uid="uid://bp5vrh7lraqh"
+path="res://.godot/imported/bow.png-9fe94387f8bdf0dda24af636a605d9f7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://asset/pictures/svgs/player.svg"
-dest_files=["res://.godot/imported/player.svg-6199624c938f4278305460718bc5ca6c.ctex"]
+source_file="res://asset/pictures/svgs/bow.png"
+dest_files=["res://.godot/imported/bow.png-9fe94387f8bdf0dda24af636a605d9f7.ctex"]
 
 [params]
 
@@ -32,6 +32,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

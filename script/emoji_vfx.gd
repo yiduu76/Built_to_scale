@@ -1,10 +1,26 @@
 extends Node2D
-@onready var label: Label = $Label
+@onready var sprite_2d: Sprite2D = $Sprite2D
+@export var BOMB:Texture2D
+@export var BOW:Texture2D
+@export var EVIL:Texture2D
+@export var PLAYER:Texture2D
 
-var emoji_str:String:
+
+var p_text:String:
 	set(v):
-		if is_node_ready():
-			label.text = emoji_str
+		p_text = v
+		if p_text in Glo.special_char:
+			if is_node_ready():
+				match p_text:
+					"💣":
+						sprite_2d.texture = BOMB
+					"🏹":
+						sprite_2d.texture = BOW
+					"😈":
+						sprite_2d.texture = EVIL
+					"😋":
+						sprite_2d.texture = PLAYER
+
 var target_pos:Vector2:
 	set(v):
 		target_pos = v
@@ -12,6 +28,7 @@ var target_pos:Vector2:
 var end_pos:Vector2
 
 func _ready() -> void:
+	p_text = p_text
 	await get_tree().create_timer(0.1).timeout
 	var rand_angel = deg_to_rad(randf_range(0,360.0))
 	var p_dir = Vector2.RIGHT.rotated(rand_angel)

@@ -1,0 +1,31 @@
+[gd_scene load_steps=8 format=3 uid="uid://dulo18bxamqlc"]
+
+[ext_resource type="Script" path="res://script/base_box.gd" id="1_81gf6"]
+[ext_resource type="StyleBox" uid="uid://cfn6uiivmpsfm" path="res://asset/ui_style/outline.tres" id="1_aq40l"]
+[ext_resource type="Texture2D" uid="uid://bh8crp131ik2t" path="res://asset/pictures/svgs/bomb.svg" id="3_y7ntq"]
+[ext_resource type="Texture2D" uid="uid://bp5vrh7lraqh" path="res://asset/pictures/svgs/bow.png" id="4_43ycy"]
+[ext_resource type="Texture2D" uid="uid://dg0u67uobh4ls" path="res://asset/pictures/svgs/evil.png" id="5_10fyo"]
+[ext_resource type="Texture2D" uid="uid://dovhkpd7sf7g0" path="res://asset/pictures/svgs/player.png" id="6_ionam"]
+[ext_resource type="Texture2D" uid="uid://bibsbxo8rcrgn" path="res://asset/pictures/svgs/empty.svg" id="7_ef87x"]
+
+[node name="base_box" type="Label"]
+offset_right = 12.0
+offset_bottom = 12.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 5
+theme_override_styles/normal = ExtResource("1_aq40l")
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("1_81gf6")
+BOMB = ExtResource("3_y7ntq")
+BOW = ExtResource("4_43ycy")
+EVIL = ExtResource("5_10fyo")
+PLAYER = ExtResource("6_ionam")
+EMPTY = ExtResource("7_ef87x")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(2, 2)
+scale = Vector2(0.016, 0.016)
+centered = false

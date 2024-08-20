@@ -34,8 +34,8 @@ func _on_settle_emoji(emoji:String,num:float):
 			await get_tree().create_timer(1.1).timeout
 			player_anim.play("attk")
 			create_atk_num(player_sword.get_parent(),Glo.atk)
-		"🐣":
-			create_emoji_vfx(center_pos,num,"🐣",ey_body.global_position)
+		"😈":
+			create_emoji_vfx(center_pos,num,"😈",ey_body.global_position)
 			await get_tree().create_timer(1.1).timeout
 			Glo.ey_size = clampf((Glo.ey_size + num),1,400)
 		"💣":
@@ -64,7 +64,7 @@ func create_emoji_vfx(p_pos,num,p_emoji:String,p_end_pos:Vector2):
 	for i in p_num:
 		var p_vfx = EMOJI_VFX.instantiate()
 		add_child(p_vfx)
-		p_vfx.get_child(0).text = p_emoji
+		p_vfx.p_text = p_emoji
 		p_vfx.global_position = p_pos
 		p_vfx.end_pos = p_end_pos
 		if bigger_zero:
@@ -111,7 +111,7 @@ func lerp_to_defult(p_emoji:String):
 		Glo.ey_atk = lerp(Glo.ey_atk,Glo.origin_ey_atk,0.3)
 	if p_emoji != "😋":
 		Glo.size = lerp(Glo.size,100.0,0.3)
-	if p_emoji != "🐣":
+	if p_emoji != "😈":
 		Glo.ey_size = lerp(Glo.ey_size,100.0,0.3)
 
 #func _on_timer_timeout() -> void:

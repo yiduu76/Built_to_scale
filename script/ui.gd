@@ -1,6 +1,5 @@
 extends Control
 class_name UIClass
-@onready var boxes: GridContainer = $Boxes
 @onready var chars_label: Label = $CharsLabel
 static  var singleton
 #@onready var hp_bar: ProgressBar = $Left/ProgressBar
@@ -27,7 +26,7 @@ func _process(delta: float) -> void:
 	ey_hp_bar.max_bar_value = Glo.origin_ey_hp
 	hp_bar.bar_value = Glo.hp
 	ey_hp_bar.bar_value = Glo.ey_hp
-	atk_num.text = "%s : %s" % ["🏹",int(Glo.atk)]
-	ey_atk_num.text = "%s : %s" % [int(Glo.ey_atk),"💣"]
-	size_num.text = "%s : %s" % ["😋",int(Glo.size)]
-	ey_size_num.text = "%s : %s" % [int(Glo.ey_size),"🐣"]
+	atk_num.text = "%s : %s" % ["",int(Glo.atk)]
+	ey_atk_num.text = "%s : %s" % [int(Glo.ey_atk),""]
+	size_num.text = "%s : %s" % ["",int(Glo.size)]
+	ey_size_num.text = "%s : %s" % [int(Glo.ey_size),""]

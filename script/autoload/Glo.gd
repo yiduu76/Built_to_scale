@@ -1,7 +1,7 @@
 extends Node
 @onready var input_dir:Vector2 = Vector2.RIGHT
 @onready var last_move_action
-const special_char = ["😋","💣","🏹","🐣"]
+const special_char = ["😋","💣","🏹","😈"]
 const caculate_char = ["+","-","*","/"]
 const number_char = ["1","2","3","4","5","6","7","8","9","0"]
 signal settle_emoji

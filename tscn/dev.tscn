@@ -1,11 +1,16 @@
-[gd_scene load_steps=27 format=3 uid="uid://1wi27141mlx1"]
+[gd_scene load_steps=24 format=3 uid="uid://1wi27141mlx1"]
 
 [ext_resource type="AudioStream" uid="uid://dom5nexmo12qi" path="res://asset/music/1.mp3" id="1_8rv8c"]
 [ext_resource type="Script" path="res://script/ui.gd" id="1_ald8d"]
 [ext_resource type="Script" path="res://script/boxes.gd" id="2_paj5d"]
+[ext_resource type="Texture2D" uid="uid://co05wgupglaxi" path="res://asset/pictures/svgs/heart.png" id="4_ibsoj"]
 [ext_resource type="AudioStream" uid="uid://blmjcw6slrrkr" path="res://asset/sound_effect/Retro Event UI 01.wav" id="5_54llt"]
 [ext_resource type="Script" path="res://script/main.gd" id="6_w1ted"]
 [ext_resource type="PackedScene" uid="uid://bxs8fg468bpm" path="res://tscn/MyBar.tscn" id="7_0v8i5"]
+[ext_resource type="Texture2D" uid="uid://dovhkpd7sf7g0" path="res://asset/pictures/svgs/player.png" id="8_1bcff"]
+[ext_resource type="Texture2D" uid="uid://bp5vrh7lraqh" path="res://asset/pictures/svgs/bow.png" id="9_64pfq"]
+[ext_resource type="Texture2D" uid="uid://dg0u67uobh4ls" path="res://asset/pictures/svgs/evil.png" id="9_lkhgq"]
+[ext_resource type="Texture2D" uid="uid://bh8crp131ik2t" path="res://asset/pictures/svgs/bomb.svg" id="10_qp84c"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_em4h8"]
 bg_color = Color(0, 0, 0, 0)
@@ -15,34 +20,8 @@ border_width_right = 1
 border_width_bottom = 1
 border_color = Color(0, 0, 0, 1)
 
-[sub_resource type="Shader" id="Shader_j87y1"]
-code = "shader_type canvas_item;
-uniform float white_scale:hint_range(0.0,1.0);
-void fragment(){
-vec4 color =texture(TEXTURE,UV);
-COLOR = mix (color,vec4(1,1,1,1),white_scale);
-COLOR.a = color.a;
-}"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0vcxr"]
-shader = SubResource("Shader_j87y1")
-shader_parameter/white_scale = 0.0
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_ddgj7"]
 radius = 26.0768
-
-[sub_resource type="Shader" id="Shader_pnk2x"]
-code = "shader_type canvas_item;
-uniform float white_scale:hint_range(0.0,1.0);
-void fragment(){
-vec4 color =texture(TEXTURE,UV);
-COLOR = mix (color,vec4(1,1,1,1),white_scale);
-COLOR.a = color.a;
-}"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_8ovgp"]
-shader = SubResource("Shader_pnk2x")
-shader_parameter/white_scale = null
 
 [sub_resource type="Animation" id="Animation_tllws"]
 length = 0.1
@@ -82,18 +61,6 @@ tracks/2/keys = {
 "update": 0,
 "values": [Vector2(0, 0)]
 }
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Body/Emoji:material:shader_parameter/white_scale")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
 
 [sub_resource type="Animation" id="Animation_vneq2"]
 resource_name = "attk"
@@ -115,18 +82,6 @@ tracks/0/keys = {
 [sub_resource type="Animation" id="Animation_4woyj"]
 resource_name = "hitted"
 length = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Body/Emoji:material:shader_parameter/white_scale")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 1.0]
-}
 
 [sub_resource type="Animation" id="Animation_lxl0q"]
 resource_name = "idel"
@@ -164,32 +119,6 @@ _data = {
 "hitted": SubResource("Animation_4woyj"),
 "idel": SubResource("Animation_lxl0q")
 }
-
-[sub_resource type="Shader" id="Shader_xhg08"]
-code = "shader_type canvas_item;
-uniform float white_scale:hint_range(0.0,1.0);
-void fragment(){
-vec4 color =texture(TEXTURE,UV);
-COLOR = mix (color,vec4(1,1,1,1),white_scale);
-COLOR.a = color.a;
-}"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7etni"]
-shader = SubResource("Shader_xhg08")
-shader_parameter/white_scale = null
-
-[sub_resource type="Shader" id="Shader_qsgjg"]
-code = "shader_type canvas_item;
-uniform float white_scale:hint_range(0.0,1.0);
-void fragment(){
-vec4 color =texture(TEXTURE,UV);
-COLOR = mix (color,vec4(1,1,1,1),white_scale);
-COLOR.a = color.a;
-}"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_yh76b"]
-shader = SubResource("Shader_qsgjg")
-shader_parameter/white_scale = 0.0
 
 [sub_resource type="Animation" id="Animation_16qk3"]
 length = 0.001
@@ -229,18 +158,6 @@ tracks/2/keys = {
 "update": 0,
 "values": [Vector2(0, 0)]
 }
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Body/Emoji:material:shader_parameter/white_scale")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
 
 [sub_resource type="Animation" id="Animation_2fegg"]
 resource_name = "attk"
@@ -273,18 +190,6 @@ tracks/1/keys = {
 [sub_resource type="Animation" id="Animation_x8w4p"]
 resource_name = "hitted"
 length = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Body/Emoji:material:shader_parameter/white_scale")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 1.0]
-}
 
 [sub_resource type="Animation" id="Animation_p06bv"]
 resource_name = "idel"
@@ -347,18 +252,8 @@ grow_vertical = 2
 script = ExtResource("1_ald8d")
 metadata/_edit_lock_ = true
 
-[node name="Boxes" type="GridContainer" parent="UICanvas/UI"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 40.0
-grow_horizontal = 2
-theme_override_constants/h_separation = -1
-theme_override_constants/v_separation = -1
-columns = 15
+[node name="Boxes" type="Node2D" parent="UICanvas/UI"]
+position = Vector2(80, 0)
 script = ExtResource("2_paj5d")
 
 [node name="CharsLabel" type="Label" parent="UICanvas/UI"]
@@ -386,39 +281,44 @@ anchors_preset = 0
 offset_right = 64.0
 offset_bottom = 40.0
 
-[node name="Label" type="Label" parent="UICanvas/UI/Left"]
-layout_mode = 2
-offset_top = 8.0
-offset_right = 22.0
-offset_bottom = 31.0
-size_flags_horizontal = 0
-text = "❤️"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="Heart" type="Sprite2D" parent="UICanvas/UI/Left"]
+position = Vector2(11, 18)
+scale = Vector2(0.0370276, 0.0370276)
+texture = ExtResource("4_ibsoj")
 
 [node name="atk_num" type="Label" parent="UICanvas/UI/Left"]
 layout_mode = 0
-offset_left = 1.0
-offset_top = 30.0
-offset_right = 41.0
-offset_bottom = 39.0
+offset_left = 19.0
+offset_top = 31.0
+offset_right = 59.0
+offset_bottom = 40.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 6
 vertical_alignment = 1
 
+[node name="Sprite2D" type="Sprite2D" parent="UICanvas/UI/Left/atk_num"]
+position = Vector2(-9, 3)
+scale = Vector2(0.03, 0.03)
+texture = ExtResource("9_64pfq")
+
 [node name="size_num" type="Label" parent="UICanvas/UI/Left"]
 layout_mode = 0
-offset_left = 2.0
-offset_top = 40.0
-offset_right = 42.0
-offset_bottom = 49.0
+offset_left = 19.0
+offset_top = 47.0
+offset_right = 59.0
+offset_bottom = 56.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 6
 vertical_alignment = 1
+
+[node name="Sprite2D2" type="Sprite2D" parent="UICanvas/UI/Left/size_num"]
+position = Vector2(-9, 3)
+scale = Vector2(0.03, 0.03)
+texture = ExtResource("8_1bcff")
 
 [node name="MyBar" parent="UICanvas/UI/Left" instance=ExtResource("7_0v8i5")]
 offset_left = 23.0
@@ -427,6 +327,7 @@ offset_right = 23.0
 offset_bottom = 29.0
 BarName = "hp"
 bar_grove_dir = "RIGHT"
+len = 50.0
 
 [node name="Right" type="Control" parent="UICanvas/UI"]
 layout_mode = 1
@@ -437,23 +338,17 @@ offset_left = -64.0
 offset_bottom = 40.0
 grow_horizontal = 0
 
-[node name="Label" type="Label" parent="UICanvas/UI/Right"]
-layout_mode = 2
-offset_left = 43.0
-offset_top = 10.0
-offset_right = 65.0
-offset_bottom = 33.0
-size_flags_horizontal = 0
-text = "❤️"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="Heart" type="Sprite2D" parent="UICanvas/UI/Right"]
+position = Vector2(54, 20)
+scale = Vector2(0.0370276, 0.0370276)
+texture = ExtResource("4_ibsoj")
 
 [node name="atk_num" type="Label" parent="UICanvas/UI/Right"]
 layout_mode = 0
 offset_left = 7.0
 offset_top = 30.0
-offset_right = 63.0
-offset_bottom = 39.0
+offset_right = 47.0
+offset_bottom = 42.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
@@ -461,18 +356,28 @@ theme_override_font_sizes/font_size = 6
 horizontal_alignment = 2
 vertical_alignment = 1
 
+[node name="Sprite2D" type="Sprite2D" parent="UICanvas/UI/Right/atk_num"]
+position = Vector2(49, 5)
+scale = Vector2(0.03, 0.03)
+texture = ExtResource("10_qp84c")
+
 [node name="size_num" type="Label" parent="UICanvas/UI/Right"]
 layout_mode = 0
 offset_left = 7.0
-offset_top = 40.0
-offset_right = 63.0
-offset_bottom = 49.0
+offset_top = 45.0
+offset_right = 47.0
+offset_bottom = 58.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 6
 horizontal_alignment = 2
 vertical_alignment = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="UICanvas/UI/Right/size_num"]
+position = Vector2(49, 5)
+scale = Vector2(0.03, 0.03)
+texture = ExtResource("9_lkhgq")
 
 [node name="MyBar" parent="UICanvas/UI/Right" instance=ExtResource("7_0v8i5")]
 offset_left = 45.0
@@ -481,6 +386,7 @@ offset_right = 45.0
 offset_bottom = 33.0
 BarName = "hp"
 bar_grove_dir = "LEFT"
+len = 50.0
 
 [node name="Eat_se" type="AudioStreamPlayer2D" parent="UICanvas/UI"]
 stream = ExtResource("5_54llt")
@@ -495,41 +401,25 @@ position = Vector2(30, 90)
 
 [node name="Body" type="Node2D" parent="Main/Player"]
 
-[node name="Emoji" type="Label" parent="Main/Player/Body"]
-material = SubResource("ShaderMaterial_0vcxr")
-custom_minimum_size = Vector2(70, 70)
-offset_left = -35.0
-offset_top = -35.0
-offset_right = 35.0
-offset_bottom = 35.0
-pivot_offset = Vector2(35, 35)
-theme_override_font_sizes/font_size = 48
-text = "😋"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="Area2D" type="Area2D" parent="Main/Player/Body"]
+position = Vector2(0, 11.6)
 collision_layer = 2
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Main/Player/Body/Area2D"]
 shape = SubResource("CircleShape2D_ddgj7")
 
+[node name="Player" type="Sprite2D" parent="Main/Player/Body"]
+position = Vector2(0, 11.6)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("8_1bcff")
+
 [node name="Weapon" type="Node2D" parent="Main/Player"]
 rotation = 0.785398
 
-[node name="Emoji" type="Label" parent="Main/Player/Weapon"]
-material = SubResource("ShaderMaterial_8ovgp")
-custom_minimum_size = Vector2(70, 70)
-offset_left = -35.0
-offset_top = -35.0
-offset_right = 35.0
-offset_bottom = 35.0
-pivot_offset = Vector2(35, 35)
-theme_override_font_sizes/font_size = 48
-text = "🏹"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="Bow" type="Sprite2D" parent="Main/Player/Weapon"]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("9_64pfq")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Main/Player"]
 libraries = {
@@ -542,47 +432,25 @@ position = Vector2(290, 90)
 
 [node name="Weapon" type="Node2D" parent="Main/Enemy" groups=["ey"]]
 
-[node name="Emoji" type="Label" parent="Main/Enemy/Weapon"]
-material = SubResource("ShaderMaterial_7etni")
-custom_minimum_size = Vector2(70, 70)
-offset_left = -35.0
-offset_top = -35.0
-offset_right = 35.0
-offset_bottom = 35.0
-pivot_offset = Vector2(35, 35)
-theme_override_font_sizes/font_size = 48
-text = "💣"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="Bomb" type="Sprite2D" parent="Main/Enemy/Weapon"]
+position = Vector2(4, -3.8)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("10_qp84c")
 
 [node name="Body" type="Node2D" parent="Main/Enemy" groups=["ey"]]
 
-[node name="Emoji" type="Label" parent="Main/Enemy/Body"]
-material = SubResource("ShaderMaterial_yh76b")
-custom_minimum_size = Vector2(70, 70)
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -35.0
-offset_top = -35.0
-offset_right = 35.0
-offset_bottom = 35.0
-grow_horizontal = 0
-grow_vertical = 2
-pivot_offset = Vector2(35, 35)
-theme_override_font_sizes/font_size = 48
-text = "🐣"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="Area2D" type="Area2D" parent="Main/Enemy/Body"]
+position = Vector2(0, 18.2)
 collision_layer = 4
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Main/Enemy/Body/Area2D"]
 shape = SubResource("CircleShape2D_ddgj7")
+
+[node name="Bomb" type="Sprite2D" parent="Main/Enemy/Body"]
+position = Vector2(0, 17.2)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("9_lkhgq")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Main/Enemy"]
 libraries = {
